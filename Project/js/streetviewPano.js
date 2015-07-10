@@ -1,12 +1,14 @@
 function init() {
+
   var _panoLoader = new GSVPANO.PanoLoader({zoom: 2});
   var _depthLoader = new GSVPANO.PanoDepthLoader();
 
   // load depthMap
-  _depthLoader.onDepthLoad = function() {
+  _depthLoader.onDepthLoad = function(imgData) {
     var x, y, canvas, context, image, w, h, c;
     
     canvas = document.createElement("canvas");
+    $('canvas').addClass("wtf zhan?");
     context = canvas.getContext('2d');
 
     w = this.depthMap.width;
@@ -28,18 +30,12 @@ function init() {
     }
     context.putImageData(image, 0, 0);
     gDepthMap = this.depthMap;
-    // $("body").append(canvas);
   }
 
   // load panorama img
   _panoLoader.onPanoramaLoad = function() {
-    // var imgData = document.createElement("img");
-    // imgData.src = this.canvas.toDataURL("image/png")
-    // $("body").append(imgData)
     imgData = this.canvas.toDataURL("image/png");
-
     initRenderSphere(imgData);
-
     _depthLoader.load(this.panoId);
   };
 
@@ -48,5 +44,6 @@ function init() {
 
 window.onload = function() {
   init();
+  $("canvas")[0].remove()
 } 
 

@@ -13,7 +13,7 @@ if ($('#container').length > 0) {
 	}
 });
 
-function initRenderSphere(imgData) {
+function initRenderSphere() {
 	var container, mesh;
 
 	container = document.getElementById( 'container' );
@@ -29,10 +29,9 @@ function initRenderSphere(imgData) {
 	var image =  document.createElement( 'img' );
 	var texture = new THREE.Texture(image);
 	image.addEventListener('load', function(event){
-		texture.flipY = false;
 		texture.needsUpdate = true;					
 	});
-	image.src = imgData//put dataURL here in string
+	image.src = //put dataURL here in string
 
 	var material = new THREE.MeshBasicMaterial( {
 		// pass the panorama img returned form streetview api here
@@ -40,10 +39,7 @@ function initRenderSphere(imgData) {
 	} );
 
 	mesh = new THREE.Mesh( geometry, material );
-	mesh.scale.x = -1;
-	mesh.scale.y = - 1;
-	// mesh.doubleSided = true;
-
+	
 	scene.add( mesh );
 
 	renderer = new THREE.WebGLRenderer();
@@ -150,11 +146,10 @@ function update() {
 
 	camera.lookAt( camera.target );
 
-	
+	/*
 	// distortion
-	// add an event listener here to toggle distortion. cool effect.
-	// camera.position.copy( camera.target ).negate();
-	
+	camera.position.copy( camera.target ).negate();
+	*/
 	renderer.render( scene, camera );
 }
 
