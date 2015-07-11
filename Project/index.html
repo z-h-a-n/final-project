@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>final project</title> 
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+    <link rel="stylesheet" href="css/googleMap.css">
+    <title>final project</title> 
 
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
-        <script src="lib/jquery.min.js"></script>
-        <script src="lib/jquery.base64.min.js"></script>
-        <script src="lib/zpipe.min.js"></script>
-        <script src="lib/GSVPano.js"></script>
-        <script src="lib/GSVPanoDepth.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery.base64.min.js"></script>
+    <script src="lib/zpipe.min.js"></script>
+    <script src="lib/GSVPano.js"></script>
+    <script src="lib/GSVPanoDepth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+    <script src="lib/threex.domevent.js"></script>
 
-        <script src="js/streetviewPano.js"></script>
-        <script src="js/sphereProjection.js"></script>
+    <script src="js/snazzyMap.js"></script>
+    <script src="js/mapSearch.js"></script>
+
+    <script src="js/streetviewPano.js"></script>
+    <script src="js/sphereProjection.js"></script>
+
 	</head> 
 	<body> 
+    <input id="pac-input" class="controls" type="text" placeholder="Search to explore">
+    <div id="map-canvas"></div>
 	  <div id="container"></div>
 	</body> 
 </html> 

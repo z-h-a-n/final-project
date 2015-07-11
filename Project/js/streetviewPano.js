@@ -8,7 +8,7 @@ function init() {
     var x, y, canvas, context, image, w, h, c;
     
     canvas = document.createElement("canvas");
-    $('canvas').addClass("wtf zhan?");
+
     context = canvas.getContext('2d');
 
     w = this.depthMap.width;

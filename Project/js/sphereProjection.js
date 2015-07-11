@@ -95,8 +95,12 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
+
+
 function onDocumentMouseDown( event ) {
-	event.preventDefault();
+console.log($('#test'));
+	console.log($('#clicked'));
+ 	event.preventDefault();
 	isUserInteracting = true;
 
 	onPointerDownPointerX = event.clientX;
@@ -153,7 +157,7 @@ function update() {
 	
 	// distortion
 	// add an event listener here to toggle distortion. cool effect.
-	// camera.position.copy( camera.target ).negate();
+	camera.position.copy( camera.target ).negate();
 	
 	renderer.render( scene, camera );
 }
