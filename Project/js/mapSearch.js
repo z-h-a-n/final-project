@@ -7,13 +7,11 @@ function initialize(_panoLoader) {
   var mapContainer = document.getElementById('map-canvas');
   var mapOptions = {
     styles: snazzyMap,
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    maxZoom: 15
   }
 
   var map = new google.maps.Map(mapContainer, mapOptions);
-  // var map = new google.maps.Map(document.getElementById('map-canvas'), {
-  //   mapTypeId: google.maps.MapTypeId.ROADMAP
-  // });
 
   var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(-33.8902, 151.1759),
@@ -59,22 +57,21 @@ function initialize(_panoLoader) {
         map: map,
         icon: image,
         title: place.name,
-        position: place.geometry.location
+        position: place.geometry.location,
       });
 
       updataPano(marker);
       markers.push(marker);
-
       bounds.extend(place.geometry.location);
     }
 
     map.fitBounds(bounds);
-
   });
   // [END region_getplaces]
+
   function updataPano(marker) {
-    lat = Number(marker.position.A.toFixed(4));
-    lng = Number(marker.position.F.toFixed(4))
+    lat = Number(marker.position.A.toFixed(3));
+    lng = Number(marker.position.F.toFixed(3))
     console.log(lat, lng);
     $("canvas").remove();
     _panoLoader.load(new google.maps.LatLng(lat, lng));
