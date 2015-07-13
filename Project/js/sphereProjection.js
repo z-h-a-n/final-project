@@ -13,8 +13,10 @@ if ($('#container').length > 0) {
 	}
 });
 
-function initRenderSphere(imgData) {
+function initRenderSphere(imgData, depthData) {
 	var container, mesh;
+
+	console.log(depthData);
 
 	container = document.getElementById( 'container' );
 
@@ -33,7 +35,7 @@ function initRenderSphere(imgData) {
 		texture.needsUpdate = true;					
 	});
 	image.src = imgData
-	
+
 	texture.minFilter = THREE.NearestFilter;
 
 	var material = new THREE.MeshBasicMaterial( {
@@ -51,8 +53,8 @@ function initRenderSphere(imgData) {
 	// cube geometry
 	var geometry = new THREE.BoxGeometry( 100, 100, 100 );
 	var material = new THREE.MeshLambertMaterial( { 
-		emissive: 0xffffff,
-		envMap: texture } )
+		emissive: "#00ffaa",
+		wireframe: true} )
 	var cube = new THREE.Mesh( geometry, material );
 	// cube.position.set(0, 100, 500)
 	scene.add( cube );
@@ -100,6 +102,7 @@ function initRenderSphere(imgData) {
 	//
 	window.addEventListener( 'resize', onWindowResize, false );
 }//end of function init()
+
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
@@ -149,6 +152,11 @@ function animate() {
 }
 
 function update() {
+
+	if ($("canvas").length > 1) {
+		$("canvas")[0].remove()
+		console.log($("canvas").length);
+	}
 	if ( isUserInteracting === false ) {
 		lon += 0.1;
 	}

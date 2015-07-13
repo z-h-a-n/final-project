@@ -1,10 +1,11 @@
 function init() {
+  var imgData, depthData;
 
   var _panoLoader = new GSVPANO.PanoLoader({zoom: 2});
   var _depthLoader = new GSVPANO.PanoDepthLoader();
   initialize(_panoLoader);
   // load depthMap
-  _depthLoader.onDepthLoad = function(imgData) {
+  _depthLoader.onDepthLoad = function() {
     var x, y, canvas, context, image, w, h, c;
     
     canvas = document.createElement("canvas");
@@ -30,6 +31,9 @@ function init() {
     }
     context.putImageData(image, 0, 0);
     gDepthMap = this.depthMap;
+    depthData = canvas.toDataURL("image/png");
+
+    initRenderSphere(imgData, depthData);
   }
 
   // load panorama img
@@ -39,10 +43,8 @@ function init() {
     _depthLoader.load(this.panoId);
   };
  
-
   _panoLoader.load(new google.maps.LatLng(51.507, -0.127));
 
-  
 }//end of init
 
 window.onload = function() {
