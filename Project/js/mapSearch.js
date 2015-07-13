@@ -2,9 +2,7 @@
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
-function initialize() {
-
-
+function initialize(_panoLoader) {
   var markers = [];
   var mapContainer = document.getElementById('map-canvas');
   var mapOptions = {
@@ -30,11 +28,6 @@ function initialize() {
 
   var searchBox = new google.maps.places.SearchBox(
     /** @type {HTMLInputElement} */(input));
-
-  $("#map-canvas").on('click', ".gm-style", function(){
-    $(this).attr("id", "clicked");
-    console.log("click id added");
-  });  
 
   // [START region_getplaces]
   // Listen for the event fired when the user selects an item from the
@@ -69,7 +62,7 @@ function initialize() {
         position: place.geometry.location
       });
 
-      getMarkerPosition(marker);
+      updataPano(marker);
       markers.push(marker);
 
       bounds.extend(place.geometry.location);
@@ -79,10 +72,12 @@ function initialize() {
 
   });
   // [END region_getplaces]
-
-  function getMarkerPosition(marker) {
-    markerPosition = [marker.position.A, marker.position.F]
-    console.log(markerPosition);
+  function updataPano(marker) {
+    lat = Number(marker.position.A.toFixed(4));
+    lng = Number(marker.position.F.toFixed(4))
+    console.log(lat, lng);
+    $("canvas").remove();
+    _panoLoader.load(new google.maps.LatLng(lat, lng));
   }
 
   // Bias the SearchBox results towards places that are within the bounds of the

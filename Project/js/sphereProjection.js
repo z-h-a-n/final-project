@@ -32,26 +32,38 @@ function initRenderSphere(imgData) {
 		texture.flipY = false;
 		texture.needsUpdate = true;					
 	});
-	image.src = imgData//put dataURL here in string
+	image.src = imgData
+	
+	texture.minFilter = THREE.NearestFilter;
 
 	var material = new THREE.MeshBasicMaterial( {
 		// pass the panorama img returned form streetview api here
 		map: texture
 	} );
 
+
 	mesh = new THREE.Mesh( geometry, material );
 	mesh.scale.x = -1;
 	mesh.scale.y = - 1;
-	// mesh.doubleSided = true;
 
 	scene.add( mesh );
+
+	// cube geometry
+	var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+	var material = new THREE.MeshLambertMaterial( { 
+		emissive: 0xffffff,
+		envMap: texture } )
+	var cube = new THREE.Mesh( geometry, material );
+	// cube.position.set(0, 100, 500)
+	scene.add( cube );
+
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
 
-	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+	$("#container").on( 'mousedown', onDocumentMouseDown);
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	document.addEventListener( 'mouseup', onDocumentMouseUp, false );
 	document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
@@ -95,11 +107,7 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-
-
 function onDocumentMouseDown( event ) {
-console.log($('#test'));
-	console.log($('#clicked'));
  	event.preventDefault();
 	isUserInteracting = true;
 
@@ -154,7 +162,6 @@ function update() {
 
 	camera.lookAt( camera.target );
 
-	
 	// distortion
 	// add an event listener here to toggle distortion. cool effect.
 	camera.position.copy( camera.target ).negate();

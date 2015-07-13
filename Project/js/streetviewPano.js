@@ -2,7 +2,7 @@ function init() {
 
   var _panoLoader = new GSVPANO.PanoLoader({zoom: 2});
   var _depthLoader = new GSVPANO.PanoDepthLoader();
-
+  initialize(_panoLoader);
   // load depthMap
   _depthLoader.onDepthLoad = function(imgData) {
     var x, y, canvas, context, image, w, h, c;
@@ -38,8 +38,11 @@ function init() {
     initRenderSphere(imgData);
     _depthLoader.load(this.panoId);
   };
+ 
 
-  _panoLoader.load(new google.maps.LatLng(51.520027, -0.069247));
+  _panoLoader.load(new google.maps.LatLng(51.507, -0.127));
+
+  
 }//end of init
 
 window.onload = function() {

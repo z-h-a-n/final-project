@@ -12,7 +12,8 @@
   height: 300px;
   width: 300px;
   margin: 10px;
-  padding: 0px
+  padding: 0px;
+  z-index: 100!important;
 }
 .controls {
   margin-top: 16px;
@@ -39,7 +40,7 @@
 }
 
 #pac-input:focus {
-  border-color: #4d90fe;
+  background-color: #00ffaa;
 }
 
 .pac-container {
