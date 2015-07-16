@@ -33,25 +33,13 @@ function initRenderSphere(imgData, depthData, gDepthMap) {
 		texture.needsUpdate = true;					
 	});
 	image.src = imgData;
-	console.log(texture)
-
-	var alpha = document.createElement('alpha');
-	var alphaMap = new THREE.Texture(alpha);
-	alpha.addEventListener('load', function(event){
-		alphaMap.flipY = false;
-		alphaMap.needsUpdate = true;
-	})
-	alpha.src = depthData;
-	console.log(alphaMap)
 
 	texture.minFilter = THREE.NearestFilter;
 
 	var material = new THREE.MeshBasicMaterial( {
 		// pass the panorama img returned form streetview api here
-		// map: texture,
-		map: alphaMap
+		map: texture
 	} );
-
 
 	mesh = new THREE.Mesh( geometry, material );
 	mesh.scale.x = -1;
@@ -61,6 +49,7 @@ function initRenderSphere(imgData, depthData, gDepthMap) {
 
 	// load 3d models in the scene
 	loadArtefact();
+
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -199,5 +188,6 @@ function update() {
 	camera.position.copy(camera.target).negate()
 	
 	renderer.render( scene, camera );
+
 }
 

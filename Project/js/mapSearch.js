@@ -75,6 +75,8 @@ function initialize(_panoLoader) {
     console.log(lat, lng);
     $("canvas").remove();
     _panoLoader.load(new google.maps.LatLng(lat, lng));
+
+    
     // calling the weather data
     weather();
   }

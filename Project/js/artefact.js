@@ -2,8 +2,9 @@ function loadArtefact() {
 		// cube geometry
 	var geometry = new THREE.BoxGeometry( 100, 100, 100 );
 	var material = new THREE.MeshLambertMaterial( { 
-		emissive: "#00ffaa",
-		wireframe: false} )
+		emissive: "#9d009d",
+		color: "#0d7500"
+		} )
 	var cube = new THREE.Mesh( geometry, material );
 	var cube1 = new THREE.Mesh( geometry, material );
 	cube.position.set(0, 100, 300)
@@ -11,6 +12,13 @@ function loadArtefact() {
 	scene.add( cube1 );
 	scene.add( cube );
 
+	var directionalLight = new THREE.DirectionalLight( "#E5FFCC", 3 );
+	directionalLight.position.set( 1, .5, 2 );
+	scene.add( directionalLight );
+
+	// var directionalLight1 = new THREE.DirectionalLight( "#E5FFCC", .2 );
+	// directionalLight.position.set( -4, 4, -3 );
+	// scene.add( directionalLight1 );
 
 	// instantiate a loader
 	// set scale if object not seen
@@ -19,7 +27,10 @@ function loadArtefact() {
 	model.push(cube1);
 	var loader = new THREE.OBJLoader();
 	// load a resource
-	loader.load('../assets/tuna.obj', function (object) {
+	loader.load('../assets/zeplin.obj', function (object) {
+		var geometry = object.children[0].geometry;
+		geometry.computeFaceNormals()
+		geometry.computeVertexNormals()
 
 		object.traverse(function (child) {
 	    if( child instanceof THREE.Mesh ) {
@@ -29,13 +40,12 @@ function loadArtefact() {
 	    }
 		});
 
-		object.scale.set(200,200,200);
-		object.position.set(0, 200, 0)
+		object.scale.set(500,400,400);
+		object.position.set(0, 400, 0)
 		model.push(object);
 		scene.add(object);
 		fish = object;
 	});
 
-	return model;
 
 }
