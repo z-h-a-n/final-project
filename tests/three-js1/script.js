@@ -24,7 +24,7 @@ scene.add(torus)
 var model = [];
 var loader = new THREE.OBJLoader();
 // load a resource
-loader.load('./TUNA.OBJ', function (object) {
+loader.load('./tuna.obj', function (object) {
 	object.traverse(function (child) {
     if( child instanceof THREE.Mesh ) {
       child.material = material;

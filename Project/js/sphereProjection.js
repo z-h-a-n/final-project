@@ -13,10 +13,8 @@ if ($('#container').length > 0) {
 	}
 });
 
-function initRenderSphere(imgData, depthData) {
+function initRenderSphere(imgData, depthData, gDepthMap) {
 	var container, mesh;
-
-	console.log(depthData);
 
 	container = document.getElementById( 'container' );
 
@@ -34,13 +32,24 @@ function initRenderSphere(imgData, depthData) {
 		texture.flipY = false;
 		texture.needsUpdate = true;					
 	});
-	image.src = imgData
+	image.src = imgData;
+	console.log(texture)
+
+	var alpha = document.createElement('alpha');
+	var alphaMap = new THREE.Texture(alpha);
+	alpha.addEventListener('load', function(event){
+		alphaMap.flipY = false;
+		alphaMap.needsUpdate = true;
+	})
+	alpha.src = depthData;
+	console.log(alphaMap)
 
 	texture.minFilter = THREE.NearestFilter;
 
 	var material = new THREE.MeshBasicMaterial( {
 		// pass the panorama img returned form streetview api here
-		map: texture
+		// map: texture,
+		map: alphaMap
 	} );
 
 
@@ -50,15 +59,8 @@ function initRenderSphere(imgData, depthData) {
 
 	scene.add( mesh );
 
-	// cube geometry
-	var geometry = new THREE.BoxGeometry( 100, 100, 100 );
-	var material = new THREE.MeshLambertMaterial( { 
-		emissive: "#00ffaa",
-		wireframe: true} )
-	var cube = new THREE.Mesh( geometry, material );
-	// cube.position.set(0, 100, 500)
-	scene.add( cube );
-
+	// load 3d models in the scene
+	loadArtefact();
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -112,6 +114,7 @@ function onWindowResize() {
 
 function onDocumentMouseDown( event ) {
  	event.preventDefault();
+ 	$("#map-canvas").toggle();
 	isUserInteracting = true;
 
 	onPointerDownPointerX = event.clientX;
@@ -119,6 +122,26 @@ function onDocumentMouseDown( event ) {
 
 	onPointerDownLon = lon;
 	onPointerDownLat = lat;
+
+	// normalized device coordinates
+	var mouse = new THREE.Vector3();
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+	var raycaster = new THREE.Raycaster();
+
+	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 ).unproject( camera );
+
+	raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+
+	var intersects = raycaster.intersectObjects( scene.children );
+
+
+
+	// var intersects = raycaster.intersectObjects( object, true );
+
+	// intersects[0].object.material.emissive.set("black")
+	console.log(intersects[0]);
 }
 
 function onDocumentMouseMove( event ) {
@@ -129,6 +152,9 @@ function onDocumentMouseMove( event ) {
 }
 
 function onDocumentMouseUp( event ) {
+	if ($("#map-canvas").css('display') === "none") {
+	 $("#map-canvas").toggle();
+	}
 	isUserInteracting = false;
 }
 
@@ -155,7 +181,6 @@ function update() {
 
 	if ($("canvas").length > 1) {
 		$("canvas")[0].remove()
-		console.log($("canvas").length);
 	}
 	if ( isUserInteracting === false ) {
 		lon += 0.1;
@@ -171,8 +196,7 @@ function update() {
 	camera.lookAt( camera.target );
 
 	// distortion
-	// add an event listener here to toggle distortion. cool effect.
-	camera.position.copy( camera.target ).negate();
+	camera.position.copy(camera.target).negate()
 	
 	renderer.render( scene, camera );
 }

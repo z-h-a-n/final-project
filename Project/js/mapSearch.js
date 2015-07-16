@@ -14,8 +14,8 @@ function initialize(_panoLoader) {
   var map = new google.maps.Map(mapContainer, mapOptions);
 
   var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(-33.8902, 151.1759),
-      new google.maps.LatLng(-33.8474, 151.2631));
+      new google.maps.LatLng(48.86084921560872, 2.3457845983642756),
+      new google.maps.LatLng(48.85237842604095, 2.35865920163576));
   map.fitBounds(defaultBounds);
 
 
@@ -75,6 +75,8 @@ function initialize(_panoLoader) {
     console.log(lat, lng);
     $("canvas").remove();
     _panoLoader.load(new google.maps.LatLng(lat, lng));
+    // calling the weather data
+    weather();
   }
 
   // Bias the SearchBox results towards places that are within the bounds of the

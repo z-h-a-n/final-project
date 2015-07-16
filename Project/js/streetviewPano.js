@@ -31,9 +31,10 @@ function init() {
     }
     context.putImageData(image, 0, 0);
     gDepthMap = this.depthMap;
+
     depthData = canvas.toDataURL("image/png");
 
-    initRenderSphere(imgData, depthData);
+    initRenderSphere(imgData, depthData, gDepthMap);
   }
 
   // load panorama img
@@ -41,9 +42,10 @@ function init() {
     imgData = this.canvas.toDataURL("image/png");
     initRenderSphere(imgData);
     _depthLoader.load(this.panoId);
+
   };
  
-  _panoLoader.load(new google.maps.LatLng(51.507, -0.127));
+  _panoLoader.load(new google.maps.LatLng(48.857, 2.3519999999999754));
 
 }//end of init
 

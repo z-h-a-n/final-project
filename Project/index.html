@@ -6,23 +6,30 @@
     <link rel="stylesheet" href="css/googleMap.css">
     <title>final project</title> 
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&output=json&cb_client=maps_sv&v=4&dm=1&pm=1&ph=1&hl=en&panoid=1234"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/jquery.base64.min.js"></script>
     <script src="lib/zpipe.min.js"></script>
     <script src="lib/GSVPano.js"></script>
     <script src="lib/GSVPanoDepth.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+    <script src="lib/objLoader.js"></script>
     <script src="lib/threex.domevent.js"></script>
-
+    
+    <script src="js/forcastIO.js"></script>
     <script src="js/snazzyMap.js"></script>
     <script src="js/mapSearch.js"></script>
     <script src="js/streetviewPano.js"></script>
-    <script src="js/sphereProjection.js"></script>
+    <script src="js/artefact.js"></script>
+    <script src="js/sphereProjection.js"></script> 
 	</head> 
 	<body> 
+    <div>
+      <h1 id="weather"></h1>
+    </div>
+
     <input id="pac-input" class="controls" type="text" placeholder="Search to explore">
-    <div id="map-canvas"></div>
+    <div id="map-canvas" class="transition"></div>
 	  <div id="container"></div>
 	</body> 
 </html> 
