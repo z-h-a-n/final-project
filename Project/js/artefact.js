@@ -1,16 +1,19 @@
+var sunMesh;
+
 function loadArtefact() {
-		// cube geometry
-	var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+		// torus geometry
+	var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );	
+	// var geometry = new THREE.BoxGeometry( 100, 100, 100 );
 	var material = new THREE.MeshLambertMaterial( { 
 		emissive: "#9d009d",
 		color: "#0d7500"
 		} )
-	var cube = new THREE.Mesh( geometry, material );
-	var cube1 = new THREE.Mesh( geometry, material );
-	cube.position.set(0, 100, 300)
+	var mesh = new THREE.Mesh( geometry, material );
+	mesh.position.set(0, 100, 300)
+	mesh.scale.set(10, 10, 10)
 	// cube1.position.set(-100, -150, 400)
-	scene.add( cube1 );
-	scene.add( cube );
+	// scene.add( mesh );
+
 
 	var directionalLight = new THREE.DirectionalLight( "#E5FFCC", 3 );
 	directionalLight.position.set( 1, .5, 2 );
@@ -20,11 +23,15 @@ function loadArtefact() {
 	// directionalLight.position.set( -4, 4, -3 );
 	// scene.add( directionalLight1 );
 
+	// sun
+	var sunGeometry = new THREE.SphereGeometry( 200, 64, 64 );
+	var sunMaterial = new THREE.MeshBasicMaterial( {color: "#FFE600"} );
+	sunMesh = new THREE.Mesh( sunGeometry, sunMaterial );
+	sunMesh.position.set(200, 600, 100)
+	
+
 	// instantiate a loader
 	// set scale if object not seen
-	var model = [];
-	model.push(cube);
-	model.push(cube1);
 	var loader = new THREE.OBJLoader();
 	// load a resource
 	loader.load('../assets/zeplin.obj', function (object) {
@@ -42,7 +49,6 @@ function loadArtefact() {
 
 		object.scale.set(500,400,400);
 		object.position.set(0, 400, 0)
-		model.push(object);
 		scene.add(object);
 		fish = object;
 	});

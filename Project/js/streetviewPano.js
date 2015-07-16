@@ -42,7 +42,6 @@ function init() {
     imgData = this.canvas.toDataURL("image/png");
     initRenderSphere(imgData);
     _depthLoader.load(this.panoId);
-
   };
  
   _panoLoader.load(new google.maps.LatLng(48.857, 2.3519999999999754));

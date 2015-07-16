@@ -47,6 +47,9 @@ function initRenderSphere(imgData, depthData, gDepthMap) {
 
 	scene.add( mesh );
 
+	// calling the weather data
+	 weather();
+
 	// load 3d models in the scene
 	loadArtefact();
 
@@ -57,6 +60,8 @@ function initRenderSphere(imgData, depthData, gDepthMap) {
 	container.appendChild( renderer.domElement );
 
 	$("#container").on( 'mousedown', onDocumentMouseDown);
+	$("#container").on( 'mouseover', mouseOver);
+	$("#container").on('mouseleave', mouseLeave);
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	document.addEventListener( 'mouseup', onDocumentMouseUp, false );
 	document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
@@ -116,6 +121,13 @@ function onDocumentMouseDown( event ) {
 	var mouse = new THREE.Vector3();
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
+function mouseOver(event) {
+	console.log("mouseover");
+	var mouse = new THREE.Vector3();
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	var raycaster = new THREE.Raycaster();
 
@@ -125,12 +137,14 @@ function onDocumentMouseDown( event ) {
 
 	var intersects = raycaster.intersectObjects( scene.children );
 
-
-
 	// var intersects = raycaster.intersectObjects( object, true );
-
-	// intersects[0].object.material.emissive.set("black")
+	// debugger;
+	intersects[0].object.material.emissive.set("black")
 	console.log(intersects[0]);
+}
+
+function mouseLeave(event){
+	
 }
 
 function onDocumentMouseMove( event ) {
